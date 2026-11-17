@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a35">
+<title>MyWeather Kurdistan | کەشوهەوا و ژیانی ڕۆژانە</title>
+<style>
+:root{--bg:#071a35;--panel:#10294a;--panel2:#153456;--line:#284666;--text:#f4f8ff;--muted:#a9bdd5;--cyan:#54d8e8;--gold:#ffd16a;--green:#74dfad;--red:#ff8b8b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#174c75 0,transparent 45%),var(--bg);color:var(--text);font-family:Tahoma,"Noto Sans Arabic",Arial,sans-serif;line-height:1.6}
+button,input,select{font:inherit}button{cursor:pointer}.wrap{max-width:1180px;margin:auto;padding:20px}
+header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:8px 0 22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#48d5e6,#3284ce);display:grid;place-items:center;font-size:25px;box-shadow:0 8px 28px #2ca6cb44}.brand h1{font-size:20px;margin:0}.brand small{color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn,.select,.search{border:1px solid var(--line);background:#10294a;color:var(--text);border-radius:12px;padding:10px 13px}.btn.primary{background:#147fa1;border-color:#2caac5}.btn:hover{filter:brightness(1.13)}
+.hero{padding:28px;border:1px solid #2d5878;border-radius:24px;background:linear-gradient(120deg,#123d60dd,#102849ee);position:relative;overflow:hidden}.hero:after{content:"☀";position:absolute;left:5%;top:-55px;font-size:210px;color:#ffe08a18}.eyebrow{color:var(--cyan);font-size:13px}.hero h2{font-size:clamp(24px,4vw,36px);margin:7px 0}.hero p{color:var(--muted);margin:0 0 18px}.locationbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.search{min-width:190px;flex:1}.select{min-width:150px}.status{font-size:12px;color:var(--muted);margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:16px}.card{background:linear-gradient(145deg,#122f51,#0e2542);border:1px solid var(--line);border-radius:19px;padding:18px;min-width:0}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.card h3{font-size:16px;margin:0 0 13px}.muted{color:var(--muted)}.big{font-size:42px;font-weight:700;line-height:1.2}.unit{font-size:16px;color:var(--muted)}.weatherline{display:flex;align-items:center;justify-content:space-between;gap:15px}.weathericon{font-size:62px}.metricrow{display:flex;gap:20px;flex-wrap:wrap;margin-top:17px}.metric{min-width:90px}.metric b{display:block;font-size:18px}.metric small{color:var(--muted)}
+.tabs{display:flex;gap:8px;overflow:auto;padding:3px 0 12px;margin-top:18px}.tab{white-space:nowrap;border:1px solid var(--line);background:#0d2542;color:var(--muted);border-radius:12px;padding:10px 15px}.tab.active{background:#176b8b;color:white;border-color:#45bfd5}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{padding:13px;border-radius:14px;background:#173758}.stat small{display:block;color:var(--muted)}.stat b{font-size:22px}.bar{height:9px;background:#284665;border-radius:20px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#42cbdc,#f7d36c);border-radius:20px;width:0}
+.chart{display:flex;align-items:end;gap:7px;height:155px;padding:10px 0 0;border-bottom:1px solid var(--line)}.barcol{flex:1;min-width:0;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:5px}.barcol i{display:block;width:min(28px,80%);border-radius:7px 7px 2px 2px;background:linear-gradient(0deg,#248ab0,#6ce0e5);min-height:3px}.barcol small{font-size:10px;color:var(--muted)}
+.forecast{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.day{background:#173758;padding:12px 7px;border-radius:13px;text-align:center}.day .ico{font-size:25px}.day b{display:block}.day small{color:var(--muted)}
+.note{font-size:12px;color:var(--muted);margin-top:12px}.pill{display:inline-block;border-radius:20px;padding:4px 9px;background:#214866;color:#bfeaf0;font-size:12px}.alert{border-right:4px solid var(--gold);background:#4a3c1d55;padding:12px;border-radius:10px}.good{border-color:var(--green);background:#174b3a55}.danger{border-color:var(--red);background:#522c3555}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 10px}
+.hidden{display:none!important}.loading{opacity:.7}.error{color:#ffb3b3}
+@media(max-width:760px){.wrap{padding:13px}.span-8,.span-6,.span-4{grid-column:span 12}.statgrid{grid-template-columns:repeat(2,1fr)}.forecast{grid-template-columns:repeat(3,1fr)}.hero{padding:21px}.weatherline{align-items:flex-start}.big{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div class="brand"><div class="logo">☀</div><div><h1>MyWeather Kurdistan</h1><small>کەشوهەوا و ژیانی ڕۆژانە</small></div></div>
+ <div class="actions"><button class="btn" id="locBtn">⌖ شوێنی من</button><button class="btn" id="refreshBtn">↻ نوێکردنەوە</button></div>
+</header>
+<section class="hero">
+ <div class="eyebrow">پێشبینی و زانیاری ژینگەیی</div>
+ <h2>ڕۆژەکەت بە پێی کەشوهەوا ڕێک بخە</h2>
+ <p>وزەی خۆر، تۆز، باران و پلانی ڕۆژانە بۆ ناوچەکەت.</p>
+ <div class="locationbar">
+  <input class="search" id="townInput" value="هەولێر" placeholder="ناوی شار یان گوند بنووسە">
+  <button class="btn primary" id="searchBtn">گەڕان</button>
+  <span class="pill" id="placeLabel">هەولێر، کوردستان</span>
+ </div>
+ <div class="status" id="updated">چاوەڕێی بارکردنی داتا...</div>
+</section>
+<nav class="tabs" aria-label="بەشەکان">
+ <button class="tab active" data-tab="overview">کورتەی دۆخ</button><button class="tab" data-tab="solar">☀ وزەی خۆر</button><button class="tab" data-tab="air">🌫 تۆز و هەوا</button><button class="tab" data-tab="rain">🌧 باران و لافاو</button><button class="tab" data-tab="forecast">پێشبینی ٧ ڕۆژ</button>
+</nav>
+<main>
+<section id="overview" class="tabview">
+ <div class="grid">
+  <article class="card span-8"><h3>کەشوهەوای ئێستا</h3><div class="weatherline"><div><div class="big" id="temp">--°</div><div id="condition" class="muted">بارکردنی زانیاری...</div><div class="muted" id="feels">هەستپێکراو: --°</div></div><div class="weathericon" id="weatherIcon">🌤️</div></div><div class="metricrow"><div class="metric"><b id="wind">--</b><small>با km/h</small></div><div class="metric"><b id="humidity">--</b><small>شێداری %</small></div><div class="metric"><b id="rainchance">--</b><small>ئەگەری باران</small></div><div class="metric"><b id="uv">--</b><small>UV</small></div></div></article>
+  <article class="card span-4"><h3>ڕێنمایی ئەمڕۆ</h3><div id="advice" class="alert good">داتا بار دەکرێت...</div><p class="note">ڕێنماییەکان بە پێی داتای پێشبینی نوێ دەکرێنەوە.</p></article>
+  <article class="card span-12"><h3>پێشبینی کورت بۆ ٢٤ کاتژمێری داهاتوو</h3><div class="chart" id="tempChart"></div><div class="note">پلەی گەرمی (°C) — پێشبینی کاتژمێری</div></article>
+  <article class="card span-12"><h3>کورتەی ژینگە</h3><div class="statgrid" id="summaryStats"><div class="stat"><small>بەرهەمی خۆر</small><b>--</b></div><div class="stat"><small>PM2.5</small><b>--</b></div><div class="stat"><small>باران</small><b>--</b></div></div></article>
+ </div>
+</section>
+<section id="solar" class="tabview hidden"><div class="grid">
+ <article class="card span-6"><h3>☀ تیشکی خۆر</h3><div class="big" id="solarNow">-- <span class="unit">W/m²</span></div><p class="muted">تیشکی ڕاستەوخۆی خۆر لە ئێستادا</p><div class="metricrow"><div class="metric"><b id="ghi">--</b><small>تیشکی گشتی W/m²</small></div><div class="metric"><b id="dni">--</b><small>تیشکی ڕاستەوخۆ W/m²</small></div></div></article>
+ <article class="card span-6"><h3>هەڵسەنگاندنی گونجاوی وزەی خۆر</h3><div class="big" id="solarScore">--</div><p class="muted" id="solarAdvice">پێشبینی بەرهەمی خۆر</p><div class="bar"><i id="solarBar"></i></div><p class="note">ئەم نمرەیە هەڵسەنگاندنی تیشکی خۆرە؛ بەرهەمی ڕاستەقینەی پانێڵ بە جۆر، توان، شوێن و سێبەر دەگۆڕێت.</p></article>
+ <article class="card span-12"><h3>تیشکی خۆر لە ماوەی ڕۆژدا</h3><div class="chart" id="solarChart"></div><div class="note">توانی تیشک بە W/m² — بەرزتر واتە ئەگەری بەرهەمی زیاتر</div></article>
+ </div></section>
+<section id="air" class="tabview hidden"><div class="grid">
+ <article class="card span-6"><h3>🌫 کوالیتی هەوا</h3><div class="big" id="aqi">--</div><p class="muted" id="aqiLabel">پۆلێنکردنی کوالیتی هەوا</p></article>
+ <article class="card span-6"><h3>پێوانەکانی تۆز</h3><div class="statgrid"><div class="stat"><small>PM2.5</small><b id="pm25">--</b><small>µg/m³</small></div><div class="stat"><small>PM10</small><b id="pm10">--</b><small>µg/m³</small></div><div class="stat"><small>تۆز Dust</small><b id="dust">--</b><small>µg/m³</small></div></div></article>
+ <article class="card span-12"><div id="airAdvice" class="alert">داتا بار دەکرێت...</div><p class="note">ئاستی هەوا لە سەرچاوەی پێشبینییە؛ جێگرەوەی پێوانەی فەرمی و ناوخۆیی نییە.</p></article>
+ </div></section>
+<section id="rain" class="tabview hidden"><div class="grid">
+ <article class="card span-6"><h3>🌧 ئەگەری باران</h3><div class="big" id="rainNow">--%</div><p class="muted">لە کاتژمێری ئێستادا</p></article>
+ <article class="card span-6"><h3>کۆی بارانی پێشبینیکراو</h3><div class="big" id="rainTotal">-- <span class="unit">mm</span></div><p class="muted">لە ٢٤ کاتژمێری داهاتوو</p></article>
+ <article class="card span-12"><div id="floodAdvice" class="alert good">دۆخی باران و مەترسی لافاو هەڵدەسەنگێندرێت...</div><p class="note">ئەم بەشە پێشبینی باران بەکاردەهێنێت، نەک پێوانەی ڕاستەوخۆی ئاستی ڕووبار. بۆ ئاگادارکردنەوەی فەرمی، سەرچاوە ناوخۆییەکان بەدواداچوون بکە.</p></article>
+ </div></section>
+<section id="forecast" class="tabview hidden"><div class="grid"><article class="card span-12"><h3>پێشبینی ٧ ڕۆژی داهاتوو</h3><div class="forecast" id="dailyForecast"></div></article></div></section>
+</main>
+<footer>MyWeather Kurdistan · داتا: Open-Meteo · بۆ مەبەستی زانیاری و پلاندانان</footer>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let lat=36.1911,lon=44.0091,place="هەولێر";
+const fmt=(v,d=0)=>v==null||!Number.isFinite(Number(v))?"--":Number(v).toFixed(d);
+const weatherText=c=>({0:"ئاسمانی پاک",1:"زۆر کەم هەور",2:"هەورایی پارچە",3:"هەور تەواو",45:"تەمی",48:"تەمی بەستوو",51:"بارانی سووک",53:"بارانی مامناوەند",55:"بارانی زۆر",61:"بارانی سووک",63:"بارانی مامناوەند",65:"بارانی زۆر",71:"بەفر",80:"ڕژانی باران",81:"ڕژانی مامناوەند",82:"ڕژانی زۆر",95:"ڕەعد و برووسکە"}[c]||"گۆڕانی کەشوهەوا");
+const icon=c=>c===0?"☀️":c<=3?"🌤️":c>=95?"⛈️":c>=80?"🌧️":c>=70?"🌨️":c>=45?"🌫️":"🌦️";
+const localHour=()=>new Date().getHours();
+async function load(){
+ $("updated").textContent="داتا نوێ دەکرێتەوە...";
+ try{
+ const base=`latitude=${lat}&longitude=${lon}&timezone=auto`;
+ const fURL=`https://api.open-meteo.com/v1/forecast?${base}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,weather_code,cloud_cover,wind_speed_10m,uv_index&hourly=temperature_2m,precipitation_probability,precipitation,shortwave_radiation,direct_radiation,diffuse_radiation,uv_index&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,sunrise,sunset&forecast_days=7`;
+ const aURL=`https://air-quality-api.open-meteo.com/v1/air-quality?${base}&current=pm10,pm2_5,dust,european_aqi,us_aqi`;
+ const [fr,ar]=await Promise.all([fetch(fURL),fetch(aURL).catch(()=>null)]);
+ if(!fr.ok)throw Error("نەتوانرا داتای کەشوهەوا وەربگیرێت");
+ const w=await fr.json(),a=ar&&ar.ok?await ar.json():null,c=w.current,h=w.hourly,d=w.daily;
+ const ix=h.time.findIndex(t=>new Date(t).getTime()>=new Date(c.time).getTime());const start=Math.max(0,ix);
+ $("temp").textContent=fmt(c.temperature_2m)+"°";$("condition").textContent=weatherText(c.weather_code);$("weatherIcon").textContent=icon(c.weather_code);
+ $("feels").textContent="هەستپێکراو: "+fmt(c.apparent_temperature)+"°";
+ $("wind").textContent=fmt(c.wind_speed_10m,1);$("humidity").textContent=fmt(c.relative_humidity_2m);
+ $("rainchance").textContent=fmt(h.precipitation_probability?.[start])+"%";$("uv").textContent=fmt(c.uv_index,1);
+ const rad=h.shortwave_radiation?.[start]??0,direct=h.direct_radiation?.[start]??0;
+ $("solarNow").innerHTML=fmt(direct)+" <span class='unit'>W/m²</span>";$("ghi").textContent=fmt(rad);$("dni").textContent=fmt(direct);
+ const score=Math.min(100,Math.round(rad/8));$("solarScore").textContent=score+"/100";$("solarBar").style.width=score+"%";
+ $("solarAdvice").textContent=score>65?"گونجاوی زۆر باش بۆ بەرهەمی خۆر":score>30?"گونجاوی مامناوەند":"تیشکی خۆر کەمە لەم کاتەدا";
+ chart("tempChart",h.temperature_2m,start,24,"°", -5,45);
+ chart("solarChart",h.shortwave_radiation,start,12,"",0,1000);
+ const rain24=(h.precipitation||[]).slice(start,start+24).reduce((s,v)=>s+(v||0),0);
+ $("rainNow").textContent=fmt(h.precipitation_probability?.[start])+"%";$("rainTotal").innerHTML=fmt(rain24,1)+" <span class='unit'>mm</span>";
+ const maxP=Math.max(...d.precipitation_probability_max.slice(0,3));
+ $("floodAdvice").className="alert "+(maxP>70||rain24>25?"danger":maxP>35||rain24>8?"":"good");
+ $("floodAdvice").textContent=maxP>70||rain24>25?"ئاگاداری: پێشبینی بارانی زۆر هەیە. لە شوێنە نزم و ڕێڕەوی ئاو دووربکەوە و ئاگادارکردنەوە فەرمییەکان بەدواداچوون بکە.":maxP>35||rain24>8?"ئەگەری باران هەیە؛ لە کاتی چوونە دەرەوە و شوێنە نزمەکان وریا بە.":"لە داتای ئێستادا نیشانەی بارانی زۆر نییە.";
+ if(a?.current){
+ const q=a.current;$("aqi").textContent=fmt(q.european_aqi);$("aqiLabel").textContent=aqiName(q.european_aqi);
+ $("pm25").textContent=fmt(q.pm2_5,1);$("pm10").textContent=fmt(q.pm10,1);$("dust").textContent=fmt(q.dust,1);
+ $("airAdvice").className="alert "+(q.european_aqi>100?"danger":q.european_aqi>50?"":"good");
+ $("airAdvice").textContent=q.european_aqi>100?"کوالیتی هەوا نائاساییە؛ کەمکردنەوەی چالاکی دەرەوە باشترە.":q.european_aqi>50?"هەوا مامناوەندە؛ کەسانی هەستیار ئاگاداربن.":"کوالیتی هەوا باشە بەپێی پێشبینی ئێستا.";
+ $("summaryStats").innerHTML=`<div class="stat"><small>تیشکی خۆر</small><b>${fmt(rad)} W/m²</b></div><div class="stat"><small>PM2.5</small><b>${fmt(q.pm2_5,1)} µg/m³</b></div><div class="stat"><small>بارانی ٢٤ کاتژمێر</small><b>${fmt(rain24,1)} mm</b></div>`;
+ }else{$("aqi").textContent="بەردەست نییە";$("airAdvice").textContent="سەرچاوەی کوالیتی هەوا ئێستا بەردەست نییە."}
+ $("advice").textContent=Number(h.precipitation_probability?.[start]||0)>50?"ئەگەری باران هەیە؛ چەتر لەگەڵ خۆت ببە.":c.uv_index>=6?"تیشکی UV بەرزە؛ پاراستنی پێست و سێبەر بەکاربهێنە.":c.wind_speed_10m>30?"با بەهێزە؛ لە شتە هەڵواسراوەکان وریا بە.":"کەشوهەوا بۆ پلانی ڕۆژانە گونجاوە.";
+ $("dailyForecast").innerHTML=d.time.map((t,i)=>`<div class="day"><small>${new Date(t+"T12:00:00").toLocaleDateString("ku",{weekday:"short"})}</small><div class="ico">${icon(d.weather_code[i])}</div><b>${fmt(d.temperature_2m_max[i])}° / ${fmt(d.temperature_2m_min[i])}°</b><small>باران ${fmt(d.precipitation_probability_max[i])}%</small><small>${weatherText(d.weather_code[i])}</small></div>`).join("");
+ $("placeLabel").textContent=place+" · "+lat.toFixed(3)+", "+lon.toFixed(3);
+ $("updated").textContent="نوێکراوەتەوە: "+new Date().toLocaleString("ku");
+ }catch(e){$("updated").innerHTML="<span class='error'>"+e.message+" — پەیوەندی ئینتەرنێت بپشکنە.</span>"}
+}
+function aqiName(v){return v==null?"بەردەست نییە":v<=20?"باش":v<=40?"باشتر":v<=60?"مامناوەند":v<=80?"خراپ بۆ هەستیاران":v<=100?"خراپ":"زۆر خراپ"}
+function chart(id,arr,start,count,suffix,min,max){const vals=arr.slice(start,start+count);$(id).innerHTML=vals.map((v,i)=>{let p=Math.max(2,Math.min(100,(v-min)/(max-min)*100));return `<div class="barcol"><small>${fmt(v)}${suffix}</small><i style="height:${p}%"></i><small>${(start+i)%24}:00</small></div>`}).join("")}
+async function searchTown(){let q=$("townInput").value.trim();if(!q)return; $("updated").textContent="گەڕان بۆ شوێن...";try{let r=await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(q)+"&count=1&language=en&format=json");let j=await r.json();if(!j.results?.length)throw Error("شوێنەکە نەدۆزرایەوە");let x=j.results[0];lat=x.latitude;lon=x.longitude;place=q;await load()}catch(e){$("updated").textContent=e.message}}
+$("searchBtn").onclick=searchTown;$("townInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchTown()});
+$("refreshBtn").onclick=load;
+$("locBtn").onclick=()=>{if(!navigator.geolocation){$("updated").textContent="وەرگرتنی شوێن لەم وێبگەڕەدا بەردەست نییە";return}navigator.geolocation.getCurrentPosition(p=>{lat=p.coords.latitude;lon=p.coords.longitude;place="شوێنی من";load()},()=>{$("updated").textContent="ڕێگە بە دەستگەیشتن بە شوێن بدە."},{enableHighAccuracy:true,timeout:10000})};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".tabview").forEach(x=>x.classList.toggle("hidden",x.id!==b.dataset.tab))});
+load();
+</script>
+</body></html>
